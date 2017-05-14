@@ -65,5 +65,6 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
+    constField "base_url" "http://gene-t-taylor.com/" `mappend`
     defaultContext
 

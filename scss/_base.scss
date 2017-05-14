@@ -63,10 +63,13 @@ table {
 }
 
 td,
-th {
+th :not gist-data
+ {
   padding: .25rem .5rem;
   border: 1px solid #e5e5e5;
 }
+
+gist-data
 
 th {
   text-align: left;
