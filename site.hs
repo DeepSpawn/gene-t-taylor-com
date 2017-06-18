@@ -2,6 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
+import           Data.Maybe (fromMaybe)
 import           Hakyll.Web.Sass (sassCompiler)
 import           Hakyll.Web.Redirect (createRedirects)
 ---------------------------------------------------------------------------
@@ -9,13 +10,46 @@ import           Hakyll.Web.Redirect (createRedirects)
 base_url :: String
 base_url = "http://gene-t-taylor.com"
 
+siteCtx :: Context String
+siteCtx = constField "site.title" "siteTitlePlaceholder" `mappend`
+          constField "site.owner.twitter" "SplicedGene"
+
+
+-- postCtxWithTags :: Tags -> Context String
+-- tagsCtx tags = tagsField "tags" tags 
+
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
     constField "base_url" base_url `mappend`
+    listField "recentPosts" postCtx (loadAllSnapshots "pages/*" "forListing") `mappend`
+    siteCtx `mappend`
     defaultContext
 
+
+
+-- tags <- buildTags "posts/*" (fromCapture "tags/*.html") 
+
+
+compileMenu :: Rules ()
+compileMenu = match "posts/*" $ version "menu" $ compile destination
+
+destination :: Compiler (Item String)
+destination = setVersion Nothing <$> getUnderlying
+                >>= getRoute
+                >>= makeItem . fromMaybe ""
+
+-- getMenu :: Compiler String
+-- getMenu = do
+--     all <- loadAll (fromVersion $ Just "menu")
+--     recent <- recentFirst all
+--     recentPosts <- pure(take 3 recent)
+--     return recentPosts    
+
+    --    all <- loadAll (fromVersion $ Just "menu")
+    --         recent <- recentFirst all
+    --         recentPosts <- pure(take 3 recent)
 
 main :: IO ()
 main = hakyll $ do
@@ -27,68 +61,74 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    match (fromList ["about.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+    -- match (fromList ["about.markdown"]) $ do
+    --     route   $ setExtension "html"
+    --     compile $ pandocCompiler
+    --         >>= loadAndApplyTemplate "templates/post.html" postCtx
+    --         >>= relativizeUrls
+    
+    -- compileMenu 
+
+    -- let rrecentPosts = compile $ do
+    --         (recentFirst =<< loadAll "posts/*") >>= pure(take 3 allPosts)
+
+    match "posts/*" $ version "forListing" $ do
+        compile $ getResourceString 
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+        compile $ do 
+            -- let indexCtx =  listField "recentPosts" postCtx (return rrecentPosts) `mappend`
+            --                 postCtx 
+            pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html" postCtx
             >>= relativizeUrls
+            -- saveSnapshot "map"
 
-    create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archives"            `mappend`
-                    defaultContext
+-- //listField "pages" context (loadAllSnapshots "pages/*" "map")
 
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
 
-    create ["sitemap.xml"] $ do
-         route   idRoute
-         compile $ do
-           posts <- recentFirst =<< loadAll "posts/*"
-           about <- load "about.markdown"
-           archive <- load "archive.html"
-           index <- load "index.html"
-           let allPosts = (return (posts ++ [about, archive, index]))
-           let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
-                            constField "host" base_url            `mappend`
-                            defaultContext
-           makeItem ""
-            >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
-            >>= relativizeUrls
+    -- create ["sitemap.xml"] $ do
+    --      route   idRoute
+    --      compile $ do
+    --        posts <- recentFirst =<< loadAll "posts/*"
+    --        about <- load "about.markdown"
+    --        index <- load "index.html"
+    --        let allPosts = (return (posts ++ [about, index]))
+    --        let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
+    --                         constField "host" base_url            `mappend`
+    --                         defaultContext
+    --        makeItem ""
+    --         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+    --         >>= relativizeUrls
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Home"                `mappend`
-                    defaultContext
-
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+            allPosts <- recentFirst =<< (loadAll ("posts/*" .&&. hasVersion "forListing"))
+            recentPosts <- pure(take 3 allPosts)
+            let indexCtx =  listField "allPosts" postCtx (return allPosts) `mappend`
+                            listField "recentPosts" postCtx (return recentPosts) `mappend`
+                            constField "title" "Recent Posts" `mappend`
+                            siteCtx `mappend`
+                            dateField "date" "%B %e, %Y" `mappend`
+                            dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
+                            constField "base_url" base_url `mappend`
+                            defaultContext
+            pandocCompiler
+                >>= loadAndApplyTemplate "templates/home.html" indexCtx
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
+    match "templates/*/*" $ compile templateCompiler
 
-    match "scss/*.scss" $ do
+    match "assets/css/i.scss" $ do
         route $ setExtension "css"
         let compressCssItem = fmap compressCss
         compile (compressCssItem <$> sassCompiler)
+
+    -- match "assets/css/entypo.css" $ do
+    --     route $ constRoute "css/entypo.css" 
 
 -------------------------------------------------------------------------------- 
 

@@ -2,7 +2,7 @@
 layout: post
 title: Matching on Varargs with Mockito
 description: Implimenting a custom Mockito 1.X Varargs Matcher
-tags: [Java, Mockito, Testing]
+tags: Java, Mockito, Testing
 comments: true
 published: true
 ---
