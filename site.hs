@@ -5,21 +5,23 @@ import           Hakyll
 import           Data.Maybe (fromMaybe)
 import           Hakyll.Web.Sass (sassCompiler)
 import           Hakyll.Web.Redirect (createRedirects)
+import           Text.Pandoc.Options
+import           Skylighting.Styles
 ---------------------------------------------------------------------------
 
 base_url :: String
 -- base_url = "http://gene-t-taylor.com"
 base_url = "http://127.0.0.1:8000"
 
-siteCtx :: Context String
-siteCtx = constField "site.title" "siteTitlePlaceholder" `mappend`
+siteCtx :: Hakyll.Context String
+siteCtx = constField "site.title" "Gene Taylor" `mappend`
           constField "site.owner.twitter" "SplicedGene"
 
 
 -- postCtxWithTags :: Tags -> Context String
 -- tagsCtx tags = tagsField "tags" tags 
 
-postCtx :: Context String
+postCtx :: Hakyll.Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`
     dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
@@ -58,8 +60,21 @@ recentPosts  = do
     ordered <- recentFirst $ [Item identifier "" | identifier <- identifiers]
     return (take 3 ordered)
 
+myPandocCompiler =
+  pandocCompilerWith
+    defaultHakyllReaderOptions
+    defaultHakyllWriterOptions
+      { writerHtml5            = True
+      , writerHighlight        = True
+      , writerHighlightStyle   = pygments
+      , writerHTMLMathMethod   = MathML Nothing                         
+      , writerEmailObfuscation = NoObfuscation
+      }
 main :: IO ()
 main = hakyll $ do
+
+
+
 
     -- create static redirect pages for outdated/broken incoming links (goes first so any collisions with content, the redirects will lose)
     version "redirects" $ createRedirects brokenLinks
@@ -70,7 +85,7 @@ main = hakyll $ do
 
     match "about.markdown" $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ myPandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" (constField "noSocial" "true" `mappend` postCtx)
             >>= relativizeUrls
     
@@ -87,7 +102,7 @@ main = hakyll $ do
         compile $ do 
             -- let indexCtx =  listField "recentPosts" postCtx (return rrecentPosts) `mappend`
             --                   ((listField "recentPosts" postCtx fakePosts) `mappend` postCtx)
-            pandocCompiler
+            myPandocCompiler
             >>= loadAndApplyTemplate "templates/post.html" postCtx
             >>= relativizeUrls
             -- saveSnapshot "map"
@@ -122,7 +137,7 @@ main = hakyll $ do
             --                 dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
             --                 constField "base_url" base_url `mappend`
             --                 defaultContext
-            pandocCompiler
+            myPandocCompiler
                 >>= loadAndApplyTemplate "templates/home.html" postCtx
                 >>= relativizeUrls
 

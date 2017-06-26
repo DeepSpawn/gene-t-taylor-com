@@ -19,4 +19,6 @@ executable gtt-blog
   ghc-options:         -threaded
   build-depends:       base >= 4.7 && < 5,
                        hakyll,
+                       pandoc,
+                       skylighting,
                        hakyll-sass
