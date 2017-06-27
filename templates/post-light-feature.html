@@ -1,0 +1,43 @@
+$if(page.image.feature)$
+
+$partial("templates/includes/head-dark.html")$
+
+<section class="article">
+
+  <div class="overlay overlay-lighter"></div>
+  <div class="featured-image" style="background-image: url($site.url$/images/$page.image.feature$)"></div>
+$else$
+
+$partial("templates/includes/head-dark.html")$
+
+<section class="article pad-top">
+
+$endif$
+
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>$title$</h1>
+            <p class="date">$date$ </p>
+            <p class="intro">$if(description) $description$ $else$ $tagline$ $endif$</p>
+          </hgroup>
+        </header>
+
+        $body$
+
+      <a class="share" href="https://twitter.com/intent/tweet?text=&quot;$title$&quot;%20$site.canonica$ $page.url$ %20via%20&#64; $site.owner.twitter$" data-dnt="true">Share</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+      $if(page.comments)$
+    <aside class="disqus">
+        $partial("templates/includes/disqus.html")
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </aside>
+    $endif$
+
+      </article>
+    </section>
+</div>
+
+$partial("templates/includes/footer.html")$

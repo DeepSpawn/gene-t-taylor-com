@@ -1,0 +1,11 @@
+<!-- DSLs for various open graph languages -->
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="$if(title)$ $title$ &#8211; $endif$ $site.title$">
+<meta property="og:description" content="$if(description)$ $description$ $else$ $content$ $endif$">
+<meta property="og:url" content="$base_url$$url$">
+<meta property="og:site_name" content="$site.title$">
+$if(image.feature)
+<meta property="og:image" content="$image.feature$">
+$endif$
+
+
