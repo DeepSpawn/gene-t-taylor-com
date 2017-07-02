@@ -1,0 +1,13 @@
+image: fpco/stack-build
+
+pipelines:
+  master:
+    - step:
+        script: 
+          - stack --version
+          - stack build
+          - stack exec gtt-blog rebuild
+          - aws s3 rm s3://gene-t-taylor.com --recursive
+          - aws s3 sync _site s3://gene-t-taylor.com --acl public-read
+          - aws configure set preview.cloudfront true
+          - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST --paths /\* 
