@@ -3,9 +3,9 @@ title: About
 tags: about 
 description: Hello, this is the personal blog of Gene Taylor
 noSocial: true
-feature: soft-trees.jpg
+feature: tussock2.png
+attribution: https://www.flickr.com/photos/tomas_sobek/16816569066
 ---
-
 <img src="../images/me.jpeg" style="width:20%" alt="Me">
 
 I am a software developer from Sydney, Australia. I work for Atlassian on the team responsible for JIRA integrations.
@@ -27,3 +27,5 @@ Hello, I am Gene Taylor, a software developer from Sydney, Australia. I currentl
 - This site was built using [Hakyll](https://jaspervdj.be/hakyll/), a Haskell static site generator.
 - The design is based on the [Balzac](https://github.com/ColeTownsend/Balzac-for-Jekyll) Jekyll theme which I have ported.
 - It is hosted on [S3](https://aws.amazon.com/s3/) and deployed using [Bitbucket pipelines](https://bitbucket.org/product/features/pipelines).
+
+<sub><sup> Header Photo by [Tomas Sobek](https://www.flickr.com/photos/tomas_sobek/16816569066) / [CC BY](https://creativecommons.org/licenses/by/2.0/)</sub></sup>
