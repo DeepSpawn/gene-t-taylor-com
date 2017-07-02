@@ -4,6 +4,7 @@ title: First Thoughts on Haskell
 description: First experiences learning Haskell during an Introduction to Functional Programming course
 tags: Haskell, FP, Functional-Programming
 comments: true
+feature: "coding-924920_1280.jpg"
 published: true
 ---
 I recently had the privilege of attending a 3 day course on Functional Programming. 

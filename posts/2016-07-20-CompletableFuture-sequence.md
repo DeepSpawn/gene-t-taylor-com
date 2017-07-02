@@ -4,6 +4,7 @@ title: List of Futures -> Future of List
 description: Implementing the sequence function for the Java 8 CompletableFuture 
 tags: Java, Java8, FP
 comments: true
+feature: "coding-924920_1280.jpg"
 published: true
 --- 
 
