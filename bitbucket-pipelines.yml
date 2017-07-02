@@ -1,7 +1,7 @@
 image: fpco/stack-build
 
 pipelines:
-  master:
+  default:
     - step:
         script: 
           - stack --version
