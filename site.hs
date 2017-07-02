@@ -160,8 +160,8 @@ main = hakyll $ do
                     listField "recentPosts" postCtx recentPosts `mappend`
                     defaultContext
             myPandocCompiler
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/page.html" archiveCtx
+                -- >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/post-index.html" archiveCtx
                 >>= relativizeUrls
                     
 
