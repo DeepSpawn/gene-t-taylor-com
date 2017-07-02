@@ -60,6 +60,12 @@ recentPosts  = do
     ordered <- recentFirst $ [Item identifier "" | identifier <- identifiers]
     return (take 3 ordered)
 
+allPosts :: Compiler [Item String]
+allPosts  = do
+    identifiers <- getMatches "posts/*"
+    ordered <- recentFirst $ [Item identifier "" | identifier <- identifiers]
+    return ordered
+
 myPandocCompiler =
   pandocCompilerWith
     defaultHakyllReaderOptions
@@ -140,6 +146,24 @@ main = hakyll $ do
             myPandocCompiler
                 >>= loadAndApplyTemplate "templates/home.html" postCtx
                 >>= relativizeUrls
+
+    match "archive.md" $ do
+        route $ setExtension "html"
+        compile $ do
+            let archiveCtx =
+                    listField "posts" postCtx allPosts `mappend`
+                    constField "title" "Archives"            `mappend`
+                    siteCtx                                  `mappend`
+                    dateField "date" "%B %e, %Y" `mappend`
+                    dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
+                    constField "base_url" base_url `mappend`
+                    listField "recentPosts" postCtx recentPosts `mappend`
+                    defaultContext
+            myPandocCompiler
+                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/page.html" archiveCtx
+                >>= relativizeUrls
+                    
 
     match "templates/*" $ compile templateCompiler
     match "templates/*/*" $ compile templateCompiler
