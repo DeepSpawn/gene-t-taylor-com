@@ -6,7 +6,7 @@ pipelines:
     - step:
         script: 
           - ls
-          - gtt-blog rebuild --system-ghc
+          - gtt-blog build
           - aws s3 rm s3://gene-t-taylor.com --recursive
           - aws s3 sync _site s3://gene-t-taylor.com --acl public-read
           - aws configure set preview.cloudfront true
