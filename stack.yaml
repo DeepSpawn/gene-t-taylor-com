@@ -67,4 +67,4 @@ extra-package-dbs: []
 image:
   container:
     name: deepspawn/gtt-blog-exec
-    base: "fpco/stack-run"
+    base: "deepspawn/stackwithawscli"
