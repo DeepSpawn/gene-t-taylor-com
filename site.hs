@@ -11,7 +11,7 @@ import           Skylighting.Styles
 
 base_url :: String
 base_url = "http://gene-t-taylor.com"
--- base_url = "http://127.0.0.1:8000"
+--base_url = "http://127.0.0.1:8000"
 
 siteCtx :: Hakyll.Context String
 siteCtx = constField "site.title" "Gene Taylor" `mappend`
@@ -112,19 +112,19 @@ main = hakyll $ do
 -- //listField "pages" context (loadAllSnapshots "pages/*" "map")
 
 
-    -- create ["sitemap.xml"] $ do
-    --      route   idRoute
-    --      compile $ do
-    --        posts <- recentFirst =<< loadAll "posts/*"
-    --        about <- load "about.markdown"
-    --        index <- load "index.html"
-    --        let allPosts = (return (posts ++ [about, index]))
-    --        let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
-    --                         constField "host" base_url            `mappend`
-    --                         defaultContext
-    --        makeItem ""
-    --         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
-    --         >>= relativizeUrls
+    create ["sitemap.xml"] $ do
+         route   idRoute
+         compile $ do
+           posts <- recentFirst =<< loadAll "posts/*"
+           about <- load "about.markdown"
+           index <- load "index.html"
+           let allPosts = (return (posts ++ [about, index]))
+           let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
+                            constField "host" base_url            `mappend`
+                            defaultContext
+           makeItem ""
+            >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+            >>= relativizeUrls
 
     match "index.html" $ do
         route idRoute
