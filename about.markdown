@@ -6,8 +6,7 @@ noSocial: true
 feature: tussock2.png
 attribution: https://www.flickr.com/photos/tomas_sobek/16816569066
 ---
-<img src="../images/portrait.jpeg" style="width:20%" alt="Me">
-
+<img src="../images/portrait.jpg" style="width:20%" alt="Me">
 I am a software developer from Sydney, Australia. I work for Atlassian on the team responsible for JIRA integrations.
 
 I studied Philosophy of the University of Otago, obtaining a Bachelor of Arts and postgraduate Diploma. I then turned my focus to Computer Science where I picked up a Diploma for Graduates and a graduate software developer position at Atlassian.
