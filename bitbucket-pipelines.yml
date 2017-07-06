@@ -1,0 +1,13 @@
+# http://mdjnewman.me/2016/01/haskell-stack-yesod-docker/ TODO
+image: deepspawn/gtt-blog-exec
+
+pipelines:
+  default:
+    - step:
+        script: 
+          - ls
+          - gtt-blog build
+          - aws s3 rm s3://gene-t-taylor.com --recursive
+          - aws s3 sync _site s3://gene-t-taylor.com --acl public-read
+          - aws configure set preview.cloudfront true
+          - aws cloudfront create-invalidation --distribution-id E2RQV9ZUZPKBPW --paths /\* 

@@ -10,8 +10,8 @@ import           Skylighting.Styles
 ---------------------------------------------------------------------------
 
 base_url :: String
--- base_url = "http://gene-t-taylor.com"
-base_url = "http://127.0.0.1:8000"
+base_url = "http://gene-t-taylor.com"
+--base_url = "http://127.0.0.1:8000"
 
 siteCtx :: Hakyll.Context String
 siteCtx = constField "site.title" "Gene Taylor" `mappend`
@@ -27,12 +27,8 @@ postCtx =
     dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
     constField "base_url" base_url `mappend`
     listField "recentPosts" postCtx recentPosts `mappend`
-    -- listField "recentPosts" postCtx ((loadAllSnapshots "pages/*" "forListing") >>= \x -> pure(take 3 x)) `mappend`
     siteCtx `mappend`
     defaultContext
-
--- tags <- buildTags "posts/*" (fromCapture "tags/*.html") 
-
 
 compileMenu :: Rules ()
 compileMenu = match "posts/*" $ version "menu" $ compile destination
@@ -42,23 +38,18 @@ destination = setVersion Nothing <$> getUnderlying
                 >>= getRoute
                 >>= makeItem . fromMaybe ""
 
--- getMenu :: Compiler String
--- getMenu = do
---     all <- loadAll (fromVersion $ Just "menu")
---     recent <- recentFirst all
---     recentPosts <- pure(take 3 recent)
---     return recentPosts    
-
-    --    all <- loadAll (fromVersion $ Just "menu")
-    --         recent <- recentFirst all
-    --         recentPosts <- pure(take 3 recent)
-
 recentPosts :: Compiler [Item String]
 recentPosts  = do
     identifiers <- getMatches "posts/*"
     -- saveSnapshot "forListing"
     ordered <- recentFirst $ [Item identifier "" | identifier <- identifiers]
     return (take 3 ordered)
+
+allPosts :: Compiler [Item String]
+allPosts  = do
+    identifiers <- getMatches "posts/*"
+    ordered <- recentFirst $ [Item identifier "" | identifier <- identifiers]
+    return ordered
 
 myPandocCompiler =
   pandocCompilerWith
@@ -70,11 +61,22 @@ myPandocCompiler =
       , writerHTMLMathMethod   = MathML Nothing                         
       , writerEmailObfuscation = NoObfuscation
       }
+
+-- --------------------------------------------------------------------------------
+-- -- https://github.com/jeffbr13/benjeffrey.com/blob/master/posts/building-benjeffrey.com-with-hakyll.md
+-- config :: Configuration
+-- config = defaultConfiguration
+--         {   deploySite = myDeploySite}
+
+-- --------------------------------------------------------------------------------
+-- myDeploySite :: Configuration -> IO ExitCode
+-- myDeploySite config = System.Exit.exitSuccess
+
+-- main = hakyllWith config $ do
+
+
 main :: IO ()
 main = hakyll $ do
-
-
-
 
     -- create static redirect pages for outdated/broken incoming links (goes first so any collisions with content, the redirects will lose)
     version "redirects" $ createRedirects brokenLinks
@@ -110,19 +112,19 @@ main = hakyll $ do
 -- //listField "pages" context (loadAllSnapshots "pages/*" "map")
 
 
-    -- create ["sitemap.xml"] $ do
-    --      route   idRoute
-    --      compile $ do
-    --        posts <- recentFirst =<< loadAll "posts/*"
-    --        about <- load "about.markdown"
-    --        index <- load "index.html"
-    --        let allPosts = (return (posts ++ [about, index]))
-    --        let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
-    --                         constField "host" base_url            `mappend`
-    --                         defaultContext
-    --        makeItem ""
-    --         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
-    --         >>= relativizeUrls
+    create ["sitemap.xml"] $ do
+         route   idRoute
+         compile $ do
+           posts <- recentFirst =<< loadAll "posts/*"
+           about <- load "about.markdown"
+           index <- load "index.html"
+           let allPosts = (return (posts ++ [about, index]))
+           let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
+                            constField "host" base_url            `mappend`
+                            defaultContext
+           makeItem ""
+            >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+            >>= relativizeUrls
 
     match "index.html" $ do
         route idRoute
@@ -140,6 +142,24 @@ main = hakyll $ do
             myPandocCompiler
                 >>= loadAndApplyTemplate "templates/home.html" postCtx
                 >>= relativizeUrls
+
+    match "archive.md" $ do
+        route $ setExtension "html"
+        compile $ do
+            let archiveCtx =
+                    listField "posts" postCtx allPosts `mappend`
+                    constField "title" "Archives"            `mappend`
+                    siteCtx                                  `mappend`
+                    dateField "date" "%B %e, %Y" `mappend`
+                    dateField "dateISO" "%Y-%m-%dT%H:%M:%S" `mappend`
+                    constField "base_url" base_url `mappend`
+                    listField "recentPosts" postCtx recentPosts `mappend`
+                    defaultContext
+            myPandocCompiler
+                -- >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+                >>= loadAndApplyTemplate "templates/post-index.html" archiveCtx
+                >>= relativizeUrls
+                    
 
     match "templates/*" $ compile templateCompiler
     match "templates/*/*" $ compile templateCompiler
