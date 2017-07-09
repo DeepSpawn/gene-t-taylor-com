@@ -159,6 +159,12 @@ main = hakyll $ do
                 -- >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/post-index.html" archiveCtx
                 >>= relativizeUrls
+    
+    match "404.md" $ do
+        route   $ setExtension "html"
+        compile $ myPandocCompiler
+            >>= loadAndApplyTemplate "templates/404.html" (constField "noSocial" "true" `mappend` postCtx)
+            >>= relativizeUrls                
                     
 
     match "templates/*" $ compile templateCompiler
