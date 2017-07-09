@@ -4,6 +4,7 @@ title: Matching on Varargs with Mockito
 description: Implimenting a custom Mockito 1.X Varargs Matcher
 tags: Java, Mockito, Testing
 comments: true
+feature: "coding-924920_1280.jpg"
 published: true
 ---
 

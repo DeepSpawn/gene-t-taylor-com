@@ -4,6 +4,7 @@ title: Java Pattern Matching in Practice
 description: Implementing Scala style Structural Pattern Matching in Java
 tags: Java, Java8, FP
 comments: true
+feature: "coding-924920_1280.jpg"
 published: true
 ---
 

@@ -4,6 +4,7 @@ title: Implementing an ImmutableMap collector
 description: Creating an ImmutableMap Collector for a Java8 Stream
 tags: Java, Java8, Guava, Streams
 comments: true
+feature: "coding-924920_1280.jpg"
 ---
 Implementing a new Stream [collector](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collector.html) can seem a little daunting,
  the interface feature mutliple type parameters and the javadoc is a wall of text.
