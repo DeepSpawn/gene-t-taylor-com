@@ -185,6 +185,10 @@ main = hakyll $ do
           route   idRoute
           compile copyFileCompiler       
 
+    match "google950fa836e6f49028.html" $ do
+        route   idRoute
+        compile copyFileCompiler
+
 -------------------------------------------------------------------------------- 
 
 --   For use with `createRedirects`.
