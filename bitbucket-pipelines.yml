@@ -1,13 +1,31 @@
-# http://mdjnewman.me/2016/01/haskell-stack-yesod-docker/ TODO
-image: deepspawn/gtt-blog-exec
+image: node:20
+
+# Note: `default` runs on every push to every branch and deploys to production.
+# This mirrors the previous Hakyll pipeline. Add a `branches:` block to scope
+# this to master only if you want safer pushes from feature branches.
 
 pipelines:
   default:
     - step:
-        script: 
-          - ls
-          - gtt-blog build
-          - aws s3 rm s3://gene-t-taylor.com --recursive
-          - aws s3 sync _site s3://gene-t-taylor.com --acl public-read
-          - aws configure set preview.cloudfront true
-          - aws cloudfront create-invalidation --distribution-id E2RQV9ZUZPKBPW --paths /\* 
+        name: Build and deploy
+        deployment: production
+        caches:
+          - node
+        script:
+          # Build
+          - npm ci
+          - npm run build
+          # Install AWS CLI
+          - apt-get update && apt-get install -y --no-install-recommends awscli
+          # Sync long-cached immutable assets (everything except HTML/XML/text/JSON)
+          - >
+            aws s3 sync dist/ s3://gene-t-taylor.com --delete --acl public-read
+            --cache-control "max-age=31536000,immutable"
+            --exclude "*.html" --exclude "*.xml" --exclude "*.txt" --exclude "*.json"
+          # Sync short-cached content (HTML/XML/text/JSON), overwriting where needed
+          - >
+            aws s3 sync dist/ s3://gene-t-taylor.com --acl public-read
+            --cache-control "max-age=3600"
+            --exclude "*" --include "*.html" --include "*.xml" --include "*.txt" --include "*.json"
+          # Invalidate CloudFront
+          - aws cloudfront create-invalidation --distribution-id E2RQV9ZUZPKBPW --paths "/*"

@@ -1,26 +1,36 @@
-# gtt-blog
+# gene-t-taylor.com
 
-blog setup
-stack new hakyll-template
-stack init
-stack install hakyll-sass
-add hakyll-sass to extra deps
+Personal site for Gene Taylor, built with [Astro](https://astro.build/).
 
+## Develop
 
-* stack build
-Builds the executable, required if you make changes to site.hs
+```bash
+npm install
+npm run dev    # http://localhost:4321
+```
 
-* stack exec gtt-blog rebuild
-rebuilds the entire site
+## Build
 
-* stack exec gtt-blog watch
-builds the site, serves it on localhost:8000, and watches it for changes to automatically rebuild it
+```bash
+npm run build  # outputs to dist/
+npm run preview
+```
 
-* stack image container
-build the docker image with the exe to deploy
+## Structure
 
-* docker tag $image deepspawn/gtt-blog-exec
-tag the image with correct tag
+```
+src/
+  content/posts/   # blog posts (markdown)
+  layouts/         # BaseLayout, PostLayout, PageLayout
+  components/      # Head, SiteHeader, Footer, SocialMeta, PostList
+  pages/           # routes — index, about, now, resume, archive, 404, posts/[slug], feed.xml, sitemap.xml
+  styles/          # SCSS
+public/            # static assets, copied verbatim to dist/
+                   # also contains the .html → /slug/ redirect stubs
+```
 
-* docker push deepspawn/gtt-blog-exec
-push it up for use with pipelines
+## Deploy
+
+`bitbucket-pipelines.yml` builds the site and syncs `dist/` to `s3://gene-t-taylor.com`,
+then invalidates CloudFront distribution `E2RQV9ZUZPKBPW`. The default pipeline runs
+on every push.
