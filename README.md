@@ -31,6 +31,13 @@ public/            # static assets, copied verbatim to dist/
 
 ## Deploy
 
-`bitbucket-pipelines.yml` builds the site and syncs `dist/` to `s3://gene-t-taylor.com`,
-then invalidates CloudFront distribution `E2RQV9ZUZPKBPW`. The default pipeline runs
-on every push.
+`.github/workflows/deploy.yml` runs on every push to `master`: builds the site, syncs
+`dist/` to `s3://gene-t-taylor.com` (long cache for assets, short cache for HTML/XML/JSON),
+and invalidates CloudFront distribution `E2RQV9ZUZPKBPW`.
+
+Required GitHub repo secrets:
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION` (the bucket's region — likely `us-east-1` or `ap-southeast-2`)
+- `CLOUDFRONT_DISTRIBUTION_ID` — `E2RQV9ZUZPKBPW`
