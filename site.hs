@@ -10,7 +10,7 @@ import           Skylighting.Styles
 ---------------------------------------------------------------------------
 
 base_url :: String
-base_url = "http://gene-t-taylor.com"
+base_url = "https://gene-t-taylor.com"
 --base_url = "http://127.0.0.1:8000"
 
 siteCtx :: Hakyll.Context String
@@ -90,6 +90,18 @@ main = hakyll $ do
         compile $ myPandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" (constField "noSocial" "true" `mappend` postCtx)
             >>= relativizeUrls
+
+    match "now.md" $ do
+        route   $ setExtension "html"
+        compile $ myPandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html" (constField "noSocial" "true" `mappend` postCtx)
+            >>= relativizeUrls
+
+    match "resume.md" $ do
+        route   $ setExtension "html"
+        compile $ myPandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html" (constField "noSocial" "true" `mappend` postCtx)
+            >>= relativizeUrls
     
     -- compileMenu 
 
@@ -117,8 +129,10 @@ main = hakyll $ do
          compile $ do
            posts <- recentFirst =<< loadAll "posts/*"
            about <- load "about.markdown"
+           now   <- load "now.md"
+           cv    <- load "resume.md"
            index <- load "index.html"
-           let allPosts = (return (posts ++ [about, index]))
+           let allPosts = (return (posts ++ [about, now, cv, index]))
            let sitemapCtx = listField "entries" postCtx allPosts  `mappend`
                             constField "host" base_url            `mappend`
                             defaultContext
@@ -176,16 +190,21 @@ main = hakyll $ do
         compile (compressCssItem <$> sassCompiler)
 
     match ( "assets/fonts/*"
-            .||. "assets/js/*" 
-            .||. "assets/js/vendor/*" 
+            .||. "assets/js/*"
+            .||. "assets/js/vendor/*"
             .||. "assets/*.png"
-            .||. "assets/*.ico" 
-            .||. "assets/css/fonts/*" 
+            .||. "assets/*.ico"
+            .||. "assets/*.pdf"
+            .||. "assets/css/fonts/*"
             .||. "assets/css/entypo.css") $ do
           route   idRoute
-          compile copyFileCompiler       
+          compile copyFileCompiler
 
     match "google950fa836e6f49028.html" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match "robots.txt" $ do
         route   idRoute
         compile copyFileCompiler
 

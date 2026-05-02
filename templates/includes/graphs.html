@@ -1,11 +1,54 @@
-<!-- DSLs for various open graph languages -->
-<meta property="og:locale" content="en_GB">
+<!-- Open Graph -->
+<meta property="og:locale" content="en_AU">
 <meta property="og:title" content="$if(title)$ $title$ &#8211; $endif$ $site.title$">
 <meta property="og:description" content="$if(description)$ $description$ $else$ $content$ $endif$">
 <meta property="og:url" content="$base_url$$url$">
 <meta property="og:site_name" content="$site.title$">
-$if(image.feature)
-<meta property="og:image" content="$image.feature$">
+$if(image.feature)$
+<meta property="og:image" content="$base_url$/images/$image.feature$">
+$else$
+<meta property="og:image" content="$base_url$/images/portrait.jpg">
 $endif$
 
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@$site.owner.twitter$">
+<meta name="twitter:creator" content="@$site.owner.twitter$">
+<meta name="twitter:title" content="$if(title)$ $title$ &#8211; $endif$ $site.title$">
+<meta name="twitter:description" content="$if(description)$ $description$ $else$ $content$ $endif$">
+$if(image.feature)$
+<meta name="twitter:image" content="$base_url$/images/$image.feature$">
+$else$
+<meta name="twitter:image" content="$base_url$/images/portrait.jpg">
+$endif$
 
+<!-- Person schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Gene Taylor",
+  "url": "https://gene-t-taylor.com/",
+  "image": "https://gene-t-taylor.com/images/portrait.jpg",
+  "jobTitle": "Senior Engineering Manager",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Atlassian"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "University of Otago"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Sydney",
+    "addressRegion": "NSW",
+    "addressCountry": "AU"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/genetaylor/",
+    "https://github.com/DeepSpawn",
+    "https://twitter.com/SplicedGene"
+  ]
+}
+</script>
