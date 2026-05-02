@@ -1,0 +1,27 @@
+---
+interface Props {
+  dark?: boolean;
+}
+
+const { dark = false } = Astro.props;
+const siteTitle = 'Gene Taylor';
+---
+<header class:list={['site-header', { darken: dark }]}>
+  <div class="wrap">
+    <hgroup>
+      <h1><a href="/">{siteTitle}</a></h1>
+    </hgroup>
+    <a href="#nav" class="menu"><span class="icons">☰</span></a>
+    <nav role="navigation">
+      <ul>
+        <li><a href="/" title={siteTitle}>Home</a></li>
+        <li><a href="/about/" title="About">About</a></li>
+        <li><a href="/now/" title="Now">Now</a></li>
+        <li><a href="/archive/" title="Archive">Archive</a></li>
+        <li><a href="/resume/" title="Résumé">Résumé</a></li>
+        <li><a href="https://github.com/DeepSpawn" target="_blank" rel="noopener" title="GitHub">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/genetaylor/" target="_blank" rel="noopener" title="LinkedIn">LinkedIn</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

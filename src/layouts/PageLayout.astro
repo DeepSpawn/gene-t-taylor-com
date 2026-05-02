@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  feature?: string;
+  noSocial?: boolean;
+}
+
+const { title, description, feature, noSocial } = Astro.props;
+const dark = !feature;
+---
+<BaseLayout title={title} description={description} feature={feature} noSocial={noSocial} dark={dark}>
+  {feature ? (
+    <section class="article">
+      <div class="overlay"></div>
+      <div class="featured-image" style={`background-image: url(/images/${feature})`}></div>
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>{title}</h1>
+          </hgroup>
+        </header>
+        <slot />
+      </article>
+    </section>
+  ) : (
+    <section class="article pad-top">
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>{title}</h1>
+          </hgroup>
+        </header>
+        <slot />
+      </article>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../lib/date';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { title, description, feature, pubDate } = post.data;
+const heroImage = feature || 'typewriter.jpg';
+---
+<BaseLayout title={title} description={description} feature={feature} dark={false}>
+  <section class="article">
+    <div class="overlay"></div>
+    <div class="featured-image" style={`background-image: url(/images/${heroImage})`}></div>
+
+    <article class="wrap post">
+      <header class="post-header">
+        <hgroup>
+          <h1>{title}</h1>
+          <p class="date">{formatDate(pubDate)}</p>
+          {description && <p class="intro">{description}</p>}
+        </hgroup>
+      </header>
+
+      <slot />
+    </article>
+  </section>
+</BaseLayout>

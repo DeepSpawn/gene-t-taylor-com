@@ -1,0 +1,32 @@
+---
+import SocialMeta from './SocialMeta.astro';
+import '../styles/global.scss';
+
+interface Props {
+  title?: string;
+  description?: string;
+  feature?: string;
+  noSocial?: boolean;
+}
+
+const { title, description, feature, noSocial = false } = Astro.props;
+const siteTitle = 'Gene Taylor';
+const fullTitle = title ? `${title} – ${siteTitle}` : siteTitle;
+const url = Astro.url.pathname;
+---
+<meta charset="utf-8" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+{!noSocial && <SocialMeta title={title} description={description} image={feature} url={url} />}
+
+<meta name="HandheldFriendly" content="True" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="cleartype" content="on" />
+
+<link rel="alternate" type="application/rss+xml" title={siteTitle} href="/feed.xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+<link rel="shortcut icon" href="/assets/favicon.ico" />
+<link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16" />

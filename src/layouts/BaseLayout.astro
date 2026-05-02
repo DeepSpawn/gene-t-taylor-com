@@ -1,0 +1,28 @@
+---
+import Head from '../components/Head.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  feature?: string;
+  noSocial?: boolean;
+  dark?: boolean;
+}
+
+const { title, description, feature, noSocial, dark = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+  <Head title={title} description={description} feature={feature} noSocial={noSocial} />
+</head>
+<body>
+  <div id="bump">
+    <SiteHeader dark={dark} />
+    <slot />
+  </div>
+  <Footer />
+</body>
+</html>

@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, formatDateISO } from '../lib/date';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  heading: string;
+}
+
+const { posts, heading } = Astro.props;
+---
+<section class="article archive">
+  <article class="archive-wrap">
+    <ol class="post-list">
+      <lh><h2><span class="bb">{heading}</span></h2></lh>
+      {posts.map((post) => (
+        <li>
+          <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+            <h1><a href={`/posts/${post.slug}/`}>{post.data.title}</a></h1>
+            <p class="date"><time datetime={formatDateISO(post.data.pubDate)} itemprop="datePublished">{formatDate(post.data.pubDate)}</time></p>
+            <p>{post.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </article>
+</section>

@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+
+const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
+const sorted = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout
+  title="Archive"
+  description="Every post on gene-t-taylor.com."
+  noSocial={true}
+  dark={true}
+>
+  <PostList posts={sorted} heading="Archive" />
+</BaseLayout>
