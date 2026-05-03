@@ -11,26 +11,27 @@ noSocial: true
 
 ## Summary
 
-Senior Engineering Manager at [Atlassian](https://atlassian.com). 11+ years building and leading teams in Jira's developer-tools space. Background in philosophy and formal methods.
+Senior Engineering Manager at [Atlassian](https://atlassian.com). 11+ years on Jira's backend, currently leading one of two teams (~17 engineers) extracting Jira's core issue API from the monolith into a new DynamoDB-backed service.
 
 ## Experience
 
 **Atlassian** — Sydney, Jan 2015 – present
 
 - *Senior Engineering Manager*, Dec 2023 – present
+  - Lead one of two teams (~17 engineers) on Issue Backend, the group extracting Jira's core issue API from the monolith into a new DynamoDB-backed service. My team owns the migration path; the sibling team owns the new service. Group of 34 within a ~200-person department.
 - *Engineering Manager*, Jun 2020 – Dec 2023
 - *Senior Developer*, Apr 2018 – Jun 2020
 - *Developer*, Jan 2016 – Apr 2018
 - *Graduate Developer*, Jan 2015 – Jan 2016
 
-<!-- TODO Gene: 1–2 bullets per role describing the team, the impact, the scale. -->
+<!-- TODO Gene: 1–2 bullets each for the EM, Senior Developer, Developer, and Graduate Developer roles describing team, impact, scale. -->
 
 ## Education
 
 **University of Otago**
 
 - Postgraduate Diploma, Philosophy (2013–2014). Dissertation: Homotopy Type Theory and the foundations of mathematics.
-- Diploma for Graduates, Computer Science (2012–2014).
+- Diploma for Graduates, Computer Science (2013–2014).
 - Bachelor of Arts, Philosophy.
 
 ## Selected writing
