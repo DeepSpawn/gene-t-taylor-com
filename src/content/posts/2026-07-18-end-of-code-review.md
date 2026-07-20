@@ -27,7 +27,7 @@ Unsurprisingly people were not writing flawless code, and defects (unhandled edg
 As part of IBM’s broader software-quality effort, Michael Fagan formalised a method of structured design and code inspections which he documented in a 1976 paper.
 
 ## IBM Code Inspections
-*M. E. Fagan, "Design and code inspections to reduce errors in program development," IBM Systems Journal, 1976.* [Link out to paper source?]
+*M. E. Fagan, ["Design and code inspections to reduce errors in program development,"](https://doi.org/10.1147/sj.153.0182) IBM Systems Journal, vol. 15, no. 3 (1976), pp. 182–211.*
 ![Opening paragraph of the paper, with the thesis highlighted: managing a process requires planning, measurement, and control](/images/end-of-code-review/fagan-paper-intro-highlighted.png)
 
 Software development was to be treated as a process like any other, it is a series of operation with a defined exit criteria. You can put an inspection and quality process at each step of the process, and use the measurements taken by these inspections to controll the overvall process.
@@ -62,7 +62,7 @@ If this process sound heavy, you have the correct impression. Fagan notes that p
 ![Fagan Table 3 — the inspection process operations, their rate of progress, and the objective of each](/images/end-of-code-review/fagan-table3-inspection-rate-of-progress.png)
 *Table 3: rate of progress for each operation (loc/hr), for design (I₁) and code (I₂).*
 
-Inspection was more than a meeting, it was a closed control loop where defects were recorded, corrected and independently verified.
+Inspection was more than a meeting, it was a closed control loop where defects were recorded, corrected then independently verified.
 
 ## Why do Inspections? - Quality 
 
@@ -85,7 +85,7 @@ This was driven by people being pretty good at finding errors if you give them t
 
 This quote from the paper is also quite revealing about the nature of the SDLC at the point in time - this was a time where you would be prepared to have a groupd of four people do a full design inspection (I₁) followed by a full implimentation inspection (I₂)  *before you would actually test it on a machine!*
 
-Drawing on the experience of the South African bank, it does seem that this process worked. The bank credited it with producing tangibly cleaner systems — at one point a maintenance group of just 21% of staff was keeping 31 live systems (1,036 programs, 525,000 lines of code) running [Citation to Standard Bank of South Africa report]
+Drawing on the experience of the South African bank, it does seem that this process worked. The bank credited it with producing tangibly cleaner systems — at one point a maintenance group of just 21% of staff was keeping 31 live systems (1,036 programs, 525,000 lines of code) running (Crossman, [*Some Experiences in the Use of Inspection Teams*](https://doi.org/10.1145/800100.803241), The Standard Bank of South Africa).
 
 ## Inspection as a learning system
 
@@ -112,9 +112,10 @@ Finally at the organization level, the outputs from inspection could be use to h
 ![The I1 logic checklist, grouped into Missing, Wrong, and Extra categories](/images/end-of-code-review/fagan-i1-logic-checklist.png)
 *The I1 logic checklist — errors classified as Missing, Wrong, or Extra.*
 
-These statistics were also allowed the organization to identify particuarly error prone modules so they could be given special attention. The software of the day showed some pretty extreme clustering of errors. Watts Humphrey[Link] recounted a contemporar story where in a codebase of around half a million lines of code split over 1,600 modules, something like 14% of the modules were responsible for all of the errors and the worst 3% of modules were responsible for 50% of the errors [Source Oral history transcript].
+These statistics were also allowed the organization to identify particuarly error prone modules so they could be given special attention.
+For an example of how clustered the defects could be, [Watts Humphrey](https://en.wikipedia.org/wiki/Watts_Humphrey) recounted one example  where in a codebase of around half a million lines of code split over 1,600 modules, something like 14% of the modules were responsible for all of the errors and the worst 3% of modules were responsible for 50% of the errors ([Oral History of Watts Humphrey](https://archive.computerhistory.org/resources/text/Oral_History/Humphrey_Watts/102702107.05.01.acc.pdf), interviewed by Grady Booch, Computer History Museum, 2009).
 
-This learned knowlege about error hotspots could then be used to drive special attention to areas that would benefit. IBM and Fagan were thinking about this as a continual learning process, where inspection and analysis were part of feedback and feedforward quality loops.
+IBM and Fagan were thinking about this as a continual learning process, where inspection and analysis were part of feedback and feedforward quality loops.
 ![Figure B — the feedback and feed-forward loops that make inspection a learning process](/images/end-of-code-review/fagan-figB-feedback-feedforward.png)
 
 ## One process, separate objectives 
