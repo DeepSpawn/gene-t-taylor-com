@@ -31,9 +31,7 @@ a:hover {
 }
 
 em {
-    padding: 1px 2px;
-    border-radius: 2px;
-    background: #ffe8c0;
+    font-style: italic;
 }
 
 strong {
@@ -287,7 +285,7 @@ header.site-header nav {
                 font-family: $sans;
                 font-size: $fs5;
                 font-weight: bold;
-                color: $grey-light;
+                color: $grey-meta;
                 text-transform: uppercase;
                 margin-top: $lh * 2/3;
             }
@@ -366,7 +364,7 @@ header.site-header nav {
             font-weight: bold;
             font-family: $sans;
             font-style: normal;
-            color: $grey-light;
+            color: $grey-meta;
             text-transform: uppercase;
             vertical-align: middle;
         }
@@ -405,20 +403,31 @@ header.site-header nav {
     }
     
     figure {
-        margin: $lh 0;
-        
+        margin: $lh auto;
+        text-align: center;
+
         img {
-            margin-bottom: $lh/2;
+            margin: 0 auto;
         }
-        
+
         figcaption {
+            margin-top: $lh/2;
+            font-family: $serif;
             font-size: $fs5;
-            font-family: $sans;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: lighten($black, 50%);
+            font-style: italic;
+            line-height: 1.45em;
+            color: $grey-meta;
             text-align: center;
+
+            a {
+                color: $link;
+            }
         }
+
+        // Opt-in sizing via a #small / #medium / #wide hint on the image URL
+        &.post-figure--small img  { width: auto; max-width: min(100%, 320px); }
+        &.post-figure--medium img { width: auto; max-width: min(100%, 520px); }
+        &.post-figure--wide img   { width: 100%; max-width: 100%; }
     }
     
     img {

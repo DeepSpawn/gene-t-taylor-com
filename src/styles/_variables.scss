@@ -16,12 +16,15 @@ $grey-dark:   #222;
 $grey-medium: #999;
 $grey-light:  #d9d9d9;
 
+/* Muted text (dates, captions) — dark enough to read on white (AA) */
+$grey-meta: #6d6d6d;
+
 /* Hilight */
 $hilite: #fffbd7;
 
 /* Accent Colors */
-$link: #8AB9D1;
-$accent: #24536B;
+$link: #2d6e94;   // readable blue on white (was #8AB9D1, too pale)
+$accent: #1c4157; // darker hover
 
 
 /* Typography

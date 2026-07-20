@@ -8,7 +8,7 @@ feature: "coding-924920_1280.jpg"
 
 If AI makes code generation effectively abundant while trustworthy human attention remains scarce, code review becomes the bottleneck. The obvious conclusion is that review needs to be automated or abandoned. This conclusion assumes we know what code review is actually for. This three-part series traces how formal inspection evolved into modern code review, why so many different responsibilities got bundled into the pull request, and which of these responsibilities AI can or cannot easily replace.
 
-## Before pull requests
+## Before Pull Requests
 
 It was 1976. 
 
@@ -16,9 +16,9 @@ A computer looked something like this
 ![Illustration of an IBM System/370 configuration — central processor and console, tape and disk storage, and card equipment, with operators at their consoles](/images/end-of-code-review/ibm-system-370.png)
 
 IT professionals, at least at IBM, looked something like:
-![IBM staff in dark suits and ties reviewing page proofs of IBM News, 1972](/images/end-of-code-review/ibm-news-1972-professionals.png)
+![IBM staff in dark suits and ties reviewing page proofs of IBM News, 1972](/images/end-of-code-review/ibm-news-1972-professionals.png#medium)
 
-Steve Jobs and Steve Wozniak had just founded Apple, Micro-soft has become Microsoft and the cutting edge of large-scale software development belongs to companies like IBM.
+Steve Jobs and Steve Wozniak just founded Apple, Micro-soft has become Microsoft and the cutting edge of large-scale software development belongs to companies like IBM.
 
 Large system development was commonly organised as a sequence of formal phases and handoffs: design, implementation, integration and test.
 
@@ -77,14 +77,14 @@ The pitch for Fagan Inspections was pretty simple: the practice was very effecti
 In modern language it was a very effective way of left-shifting a significant fraction of the overall error count.
 Why was it so important to left-shift the catching of errors?
 
-![Highlighted quote: purging errors early is 10 to 100 times less expensive than late rework](/images/end-of-code-review/fagan-quote-purging-errors-cost.png)
+![Highlighted quote: purging errors early is 10 to 100 times less expensive than late rework](/images/end-of-code-review/fagan-quote-purging-errors-cost.png#medium)
 
 This number sounds high; the exact multiplier is likely specific to the IBM context, but the mechanism is easy enough to understand. If you look at the errors reported in the paper, one of the main error classes was missing logic rather than incorrect statements. Missing logic could be introduced in the design or specification and then propagated consistently through implementation and tests, and dependent modules might start relying on this behavior. The visible fault might only appear at some distance from the point of origin. Finding and fixing it could involve very extensive diagnostic work to track down, and the fix could involve unwinding all of the work that had accumulated around that assumption.
 
 In IBM's environment the avoided downstream rework was large enough to more than justify putting four people in a room to inspect the design and implementation end to end.
 
 This was driven by people being pretty good at finding errors if you give them technical context, no distractions and a single focus on finding errors: 
-![Fagan: approximately two thirds of all errors reported during development are found by I₁ and I₂ inspections prior to machine testing](/images/end-of-code-review/fagan-quote-two-thirds-before-testing.png)
+![Fagan: approximately two thirds of all errors reported during development are found by I₁ and I₂ inspections prior to machine testing](/images/end-of-code-review/fagan-quote-two-thirds-before-testing.png#medium)
 
 This is also revealing of the development environment: IBM was prepared to conduct a full design inspection followed by a full code inspection *before running the program on a machine.*
 
@@ -114,7 +114,7 @@ This was explicitly contrasted with the desk "walk-through" practice of the day,
 
 Finally, at the organization level, the outputs from inspection could be used to help drive quality for the entire org. Error frequencies allowed error checklists to be produced and updated. Here is an example of the kind of inspection checklists produced by IBM at this time:
 ![The I1 logic checklist, grouped into Missing, Wrong, and Extra categories](/images/end-of-code-review/fagan-i1-logic-checklist.png)
-*The I1 logic checklist — errors classified as Missing, Wrong, or Extra.*
+*The I1 logic checklist*
 
 These statistics also allowed the organization to identify particularly error-prone modules so they could be given special attention.
 For an example of how clustered the defects could be, [Watts Humphrey](https://en.wikipedia.org/wiki/Watts_Humphrey) recounted one example where in a codebase of around half a million lines of code split over 1,600 modules, something like 14% of the modules were responsible for all of the errors and the worst 3% of modules were responsible for 50% of the errors ([Oral History of Watts Humphrey](https://archive.computerhistory.org/resources/text/Oral_History/Humphrey_Watts/102702107.05.01.acc.pdf), interviewed by Grady Booch, Computer History Museum, 2009).
@@ -142,12 +142,12 @@ Contrast this with modern code review, where one async comment thread may potent
 
 ## Conclusions
 
-I am not about to make my team don a shirts and tie then convene a four-person inspection panel. But Fagan’s process exposes something important about modern code review.
+I am not about to make my team don on a shirt and tie then convene a four-person inspection panel. But Fagan’s process exposes something important about modern code review.
 
 The Fagan inspection was not merely a manual bug detector. It was a deliberately structured system for finding defects, transferring knowledge and converting local mistakes into organizational learning. You can find some of the same feedback-loop ambitions of the Fagan inspection process in the modern DevOps movement, but it's worth thinking about what things we may have lost over the years - how many organizations are keeping track of mistakes by category for things caught in the peer review stage?
 
 Modern code review retained several of these functions but compressed them into a single asynchronous approval workflow.
-These bundled functions help explain why the prospect of ending code review produces several different anxieties. Some are concerned that AI is not yet good enough at the quality-control part of the process ("Slop Tsunami"), while others are more concerned about the education and socialization aspects being lost ("Won't somebody think of the children"). 
+These bundled functions help explain why the prospect of ending code review produces several different anxieties. Some are concerned that AI is not yet good enough at the quality-control part of the process, while others are more concerned about the education and socialization aspects being lost. 
 
 Even if AI can find an increasing share of defects, what will take the place of the rest of the system?
 

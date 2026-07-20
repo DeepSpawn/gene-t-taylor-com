@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import rehypeFigures from './src/lib/rehype-figures.mjs';
 
 export default defineConfig({
   site: 'https://gene-t-taylor.com',
@@ -8,6 +9,9 @@ export default defineConfig({
     format: 'directory',
   },
   integrations: [mdx()],
+  markdown: {
+    rehypePlugins: [rehypeFigures],
+  },
   // Note: trailing-slash directory redirects only — handled by Astro.
   // The .html-source redirects are emitted as static files under public/
   // (see public/posts/*.html and public/about.html etc.), because Astro's
