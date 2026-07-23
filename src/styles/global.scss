@@ -7,10 +7,7 @@
 @import "normalize";
 @import "mixins";
 @import "variables";
-@import "grid";
+@import "fonts";
 @import "type";
 @import "styles";
 @import "syntaxs";
-
-// Remove the definition below for a pixel-based layout
-$total-width: 100%;

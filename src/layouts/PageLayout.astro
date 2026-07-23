@@ -1,40 +1,31 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 
-interface Props {
+interface FrontmatterProps {
   title?: string;
   description?: string;
   feature?: string;
   noSocial?: boolean;
 }
 
-const { title, description, feature, noSocial } = Astro.props;
-const dark = !feature;
+interface Props extends FrontmatterProps {
+  // Markdown pages using `layout:` pass their frontmatter here, not as top-level props.
+  frontmatter?: FrontmatterProps;
+}
+
+const fm = Astro.props.frontmatter ?? {};
+const title = Astro.props.title ?? fm.title;
+const description = Astro.props.description ?? fm.description;
+const feature = Astro.props.feature ?? fm.feature;
+const noSocial = Astro.props.noSocial ?? fm.noSocial;
 ---
-<BaseLayout title={title} description={description} feature={feature} noSocial={noSocial} dark={dark}>
-  {feature ? (
-    <section class="article">
-      <div class="overlay"></div>
-      <div class="featured-image" style={`background-image: url(/images/${feature})`}></div>
-      <article class="wrap post">
-        <header class="post-header">
-          <hgroup>
-            <h1>{title}</h1>
-          </hgroup>
-        </header>
-        <slot />
-      </article>
-    </section>
-  ) : (
-    <section class="article pad-top">
-      <article class="wrap post">
-        <header class="post-header">
-          <hgroup>
-            <h1>{title}</h1>
-          </hgroup>
-        </header>
-        <slot />
-      </article>
-    </section>
-  )}
+<BaseLayout title={title} description={description} feature={feature} noSocial={noSocial}>
+  <article class="page">
+    <header class="page-head">
+      <h1>{title}</h1>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
 </BaseLayout>

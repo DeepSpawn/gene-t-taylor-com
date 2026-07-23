@@ -1,27 +1,26 @@
 ---
-interface Props {
-  dark?: boolean;
-}
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => pathname === href || pathname === href.replace(/\/$/, '');
 
-const { dark = false } = Astro.props;
-const siteTitle = 'Gene Taylor';
+const nav = [
+  { label: 'Writing', href: '/archive/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Now', href: '/now/' },
+  { label: 'RSS', href: '/feed.xml' },
+];
 ---
-<header class:list={['site-header', { darken: dark }]}>
-  <div class="wrap">
-    <hgroup>
-      <h1><a href="/">{siteTitle}</a></h1>
-    </hgroup>
-    <a href="#nav" class="menu"><span class="icons">☰</span></a>
-    <nav role="navigation">
-      <ul>
-        <li><a href="/" title={siteTitle}>Home</a></li>
-        <li><a href="/about/" title="About">About</a></li>
-        <li><a href="/now/" title="Now">Now</a></li>
-        <li><a href="/archive/" title="Archive">Archive</a></li>
-        <li><a href="/resume/" title="Résumé">Résumé</a></li>
-        <li><a href="https://github.com/DeepSpawn" target="_blank" rel="noopener" title="GitHub">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/genetaylor/" target="_blank" rel="noopener" title="LinkedIn">LinkedIn</a></li>
-      </ul>
-    </nav>
-  </div>
+<header class="site-header">
+  <a class="wordmark" href="/">GENE TAYLOR</a>
+  <nav aria-label="Primary">
+    <ul>
+      {nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 </header>

@@ -1,76 +1,66 @@
 /* ==========================================================================
-   VARIABLES
+   VARIABLES — "quiet essay" redesign
+   Values sourced from the post-page design handoff. A single token system;
+   the old grey-scale / pixel type-scale variables were retired with the
+   float-grid layout.
    ========================================================================== */
 
-/* Colors
+/* Colours
    ========================================================================== */
 
-/* Don't use black */
+$bg:          #faf9f6; // page background (warm off-white)
+$ink:         #33322f; // primary text
+$ink-strong:  #24211d; // rare, for the very darkest ink if needed
+$blockquote:  #44423c; // pull-quote text
+$standfirst:  #5b584f; // standfirst / lede
+$secondary:   #75726a; // nav, secondary UI text
+$muted:       #9a968c; // meta line, captions, disabled
 
-$black:  #3b3b3b;
-$white: #f9f9f9;
+$rule:        #e6e3dc; // hairline borders
 
-/* Gray scale */
+$accent:      #24536b; // links, accents (carried over from the old site)
+$accent-dark: #16374a; // body-link hover
 
-$grey-dark:   #222;
-$grey-medium: #999;
-$grey-light:  #d9d9d9;
-
-/* Hilight */
-$hilite: #fffbd7;
-
-/* Accent Colors */
-$link: #8AB9D1;
-$accent: #24536B;
-
+$code-bg:     #f0eee7; // inline-code background
+$pre-bg:      #2d2c29; // code-block background
+$pre-fg:      #d8d5cc; // code-block foreground
 
 /* Typography
    ========================================================================== */
 
-$sans: "Arial", sans-serif;
-$serif: "Georgia", serif;
+$display: "Newsreader", Georgia, "Times New Roman", serif;      // headings / display
+$body:    "Source Serif 4", Georgia, "Times New Roman", serif;  // body copy
+$mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace; // UI + code
 
-   
-   
-/* Type Scale
+/* Type scale (px, from the handoff)
    ========================================================================== */
 
-/** * 12 & 16 as roots then powers of two. */
+$fs-h1:        52px;
+$fs-h2:        32px;
+$fs-h3:        24px;   // not in the mock; sized between h2 and body for depth
+$fs-standfirst:23px;
+$fs-body:      19px;
+$fs-blockquote:26px;
+$fs-code:      16px;
+$fs-pre:       14.5px;
+$fs-ui:        13px;   // kicker + nav
+$fs-meta:      12.5px; // meta line + colophon
+$fs-caption:   12px;   // figcaption
 
-$fs1:64px;
-$fs2:48px;
-$fs3:28px;
-$fs4:24px;
-
-$fsp:20px;
-
-$fs5:16px;
-$fs6:14px;
-
-// Line Height
-
-$lh: 33px;
-$lhsmall: 24px;
-
-// Sizing 
-$footerHeight: 320px;
-
-// Griddit
-
-
-
-/* Break Points
-   ========================================================================== */
-   
-/* Mobile */
-$breakpoint-1-max-width:480px;
-
-/* Tablet */
-$breakpoint-2-max-width:800px;
-$breakpoint-3-max-width:1200px;
-
-/* Style Tidbits
+/* Layout & rhythm
    ========================================================================== */
 
-$borderR: 4px;
+$reading-width: 680px; // the single reading column
+$header-pad-x:  64px;   // site-header horizontal padding
+$para-gap:      28px;   // paragraph rhythm
 
+/* Breakpoints
+   ========================================================================== */
+
+$bp-mobile: 760px; // single breakpoint for the reading layout
+
+/* Tidbits
+   ========================================================================== */
+
+$radius-code: 3px;
+$radius-pre:  4px;

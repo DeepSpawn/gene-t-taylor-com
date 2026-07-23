@@ -4,24 +4,25 @@ import { formatDate, formatDateISO } from '../lib/date';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
-  heading: string;
 }
 
-const { posts, heading } = Astro.props;
+const { posts } = Astro.props;
+
+const readingTime = (post: CollectionEntry<'posts'>) =>
+  Math.max(1, Math.round(post.body.split(/\s+/).filter(Boolean).length / 230));
 ---
-<section class="article archive">
-  <article class="archive-wrap">
-    <ol class="post-list">
-      <lh><h2><span class="bb">{heading}</span></h2></lh>
-      {posts.map((post) => (
-        <li>
-          <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-            <h1><a href={`/posts/${post.slug}/`}>{post.data.title}</a></h1>
-            <p class="date"><time datetime={formatDateISO(post.data.pubDate)} itemprop="datePublished">{formatDate(post.data.pubDate)}</time></p>
-            <p>{post.data.description}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </article>
-</section>
+<ol class="writing-list">
+  {posts.map((post) => (
+    <li itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+      {post.data.series && (
+        <span class="w-kicker">{post.data.series.name} · Part {post.data.series.part}</span>
+      )}
+      <h2 class="w-title"><a href={`/posts/${post.slug}/`} itemprop="url">{post.data.title}</a></h2>
+      <p class="w-meta">
+        <time datetime={formatDateISO(post.data.pubDate)} itemprop="datePublished">{formatDate(post.data.pubDate)}</time>
+        · {readingTime(post)} min read
+      </p>
+      <p class="w-desc" itemprop="description">{post.data.description}</p>
+    </li>
+  ))}
+</ol>
