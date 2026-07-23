@@ -3,7 +3,6 @@ layout: ../layouts/PageLayout.astro
 title: About
 description: "Gene Taylor — Senior Engineering Manager at Atlassian, Sydney. Philosophy background; leading a team extracting Jira's core issue API onto DynamoDB."
 noSocial: true
-feature: tussock2.png
 ---
 
 <img src="/images/portrait.jpg" style="width:20%" alt="Gene Taylor">
@@ -18,7 +17,7 @@ These days I think a lot about scaling engineering teams with the right balance 
 
 I write about that kind of thing here, when I find the time.
 
-You can reach me at [contact@gene-t-taylor.com](mailto:contact@gene-t-taylor.com), or find me on [LinkedIn](https://www.linkedin.com/in/genetaylor/) and [GitHub](https://github.com/DeepSpawn).
+You can reach me at [contact@gene-t-taylor.com](mailto:contact@gene-t-taylor.com), read my [résumé](/resume/), or find me on [LinkedIn](https://www.linkedin.com/in/genetaylor/) and [GitHub](https://github.com/DeepSpawn).
 
 # Colophon
 

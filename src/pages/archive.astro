@@ -6,11 +6,11 @@ import PostList from '../components/PostList.astro';
 const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
 const sorted = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
-<BaseLayout
-  title="Archive"
-  description="Every post on gene-t-taylor.com."
-  noSocial={true}
-  dark={true}
->
-  <PostList posts={sorted} heading="Archive" />
+<BaseLayout title="Writing" description="Everything published on gene-t-taylor.com." noSocial={true}>
+  <section class="writing-section">
+    <header class="page-head">
+      <h1>Writing</h1>
+    </header>
+    <PostList posts={sorted} />
+  </section>
 </BaseLayout>

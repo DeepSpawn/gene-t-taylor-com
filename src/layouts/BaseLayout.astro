@@ -8,10 +8,9 @@ interface Props {
   description?: string;
   feature?: string;
   noSocial?: boolean;
-  dark?: boolean;
 }
 
-const { title, description, feature, noSocial, dark = false } = Astro.props;
+const { title, description, feature, noSocial } = Astro.props;
 ---
 <!doctype html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
@@ -19,10 +18,10 @@ const { title, description, feature, noSocial, dark = false } = Astro.props;
   <Head title={title} description={description} feature={feature} noSocial={noSocial} />
 </head>
 <body>
-  <div id="bump">
-    <SiteHeader dark={dark} />
+  <SiteHeader />
+  <main>
     <slot />
-  </div>
+  </main>
   <Footer />
 </body>
 </html>

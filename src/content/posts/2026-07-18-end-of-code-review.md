@@ -1,9 +1,14 @@
 ---
-title: "The End of Code Review? Part 1 - The industrial origins of modern code review"
+title: "The industrial origins of modern code review"
 description: "Modern code review inherited several different jobs from formal software inspections. What happens when AI replaces only one of them?"
 pubDate: 2026-07-18
 tags: []
 feature: "coding-924920_1280.jpg"
+series:
+  name: "The End of Code Review?"
+  slug: "end-of-code-review"
+  part: 1
+  total: 3
 ---
 
 If AI makes code generation effectively abundant while trustworthy human attention remains scarce, code review becomes the bottleneck. The obvious conclusion is that review needs to be automated or abandoned. This conclusion assumes we know what code review is actually for. This three-part series traces how formal inspection evolved into modern code review, why so many different responsibilities got bundled into the pull request, and which of these responsibilities AI can or cannot easily replace.

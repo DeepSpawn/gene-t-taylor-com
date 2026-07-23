@@ -6,25 +6,22 @@ import PostList from '../components/PostList.astro';
 const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
 const recentPosts = allPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+  .slice(0, 4);
 ---
 <BaseLayout
-  title="Recent Posts"
+  title={undefined}
   description="Gene Taylor — engineering manager at Atlassian. Notes on building software, leading teams, and the occasional detour."
-  feature="typewriter.jpg"
-  dark={false}
 >
-  <section class="article">
-    <div class="overlay"></div>
-    <div class="featured-image" style="background-image: url(/images/typewriter.jpg)"></div>
-    <article class="wrap post">
-      <header class="post-header home-intro">
-        <h1>Gene Taylor</h1>
-        <p class="intro">
-          Senior Engineering Manager at <a href="https://atlassian.com">Atlassian</a> in Sydney. I've spent the last decade building and leading teams in and around Jira's developer-tools space. <a href="/about/">More about me</a> — or read on for things I've written.
-        </p>
-      </header>
-    </article>
+  <section class="home-intro">
+    <h1>Gene Taylor</h1>
+    <p class="lede">
+      Senior Engineering Manager at <a href="https://atlassian.com">Atlassian</a> in Sydney. I've spent the last decade building and leading teams in and around Jira's developer-tools space. <a href="/about/">More about me</a> — or read on for things I've written.
+    </p>
   </section>
-  <PostList posts={recentPosts} heading="Recent Posts" />
+
+  <section class="writing-section">
+    <h2 class="section-title">Writing</h2>
+    <PostList posts={recentPosts} />
+    <p class="see-all"><a href="/archive/">All writing →</a></p>
+  </section>
 </BaseLayout>

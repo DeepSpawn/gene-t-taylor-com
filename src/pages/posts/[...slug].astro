@@ -4,19 +4,46 @@ import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => data.published !== false);
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+
+  return posts.map((post) => {
+    // Reading time — words / ~230 wpm, computed off the raw markdown.
+    const words = post.body.split(/\s+/).filter(Boolean).length;
+    const readingTime = Math.max(1, Math.round(words / 230));
+
+    // Series prev/next — nearest published siblings sharing the series slug.
+    let prev: { href: string; title: string } | null = null;
+    let next: { href: string; title: string } | null = null;
+    const series = post.data.series;
+    if (series) {
+      const parts = posts
+        .filter((p) => p.data.series?.slug === series.slug)
+        .sort((a, b) => a.data.series!.part - b.data.series!.part);
+      const idx = parts.findIndex((p) => p.slug === post.slug);
+      const toLink = (p: CollectionEntry<'posts'>) => ({
+        href: `/posts/${p.slug}/`,
+        title: p.data.title,
+      });
+      if (idx > 0) prev = toLink(parts[idx - 1]);
+      if (idx >= 0 && idx < parts.length - 1) next = toLink(parts[idx + 1]);
+    }
+
+    return {
+      params: { slug: post.slug },
+      props: { post, readingTime, prev, next },
+    };
+  });
 }
 
 interface Props {
   post: CollectionEntry<'posts'>;
+  readingTime: number;
+  prev: { href: string; title: string } | null;
+  next: { href: string; title: string } | null;
 }
 
-const { post } = Astro.props;
+const { post, readingTime, prev, next } = Astro.props;
 const { Content } = await post.render();
 ---
-<PostLayout post={post}>
+<PostLayout post={post} readingTime={readingTime} prev={prev} next={next}>
   <Content />
 </PostLayout>
