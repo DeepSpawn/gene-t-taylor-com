@@ -24,7 +24,7 @@ but breaking it down into the two building blocks it is not so bad.
 
 So making use of a Subject in out Dynamodb example we can put together something that looks like
 
-~~~~ {.java}
+```java
 private Observable<QueryResult> blockingPaging(
 Function<AttributeValue, QueryResult> fetchPage) {
 
@@ -45,7 +45,7 @@ Function<AttributeValue, QueryResult> fetchPage) {
                 return qr;
             });
  }
-~~~~~
+```
 - After fetching a page we push the lastEvaluatedKey to the subject so that it is availiable to be pulled when we want to fetch the next page from dynamoDB. 
 - We need to handle the starting case and push some inital value, possibly a dummy value, so we are able to fetch the first page. 
 - We also terminating the Observeable when there is nothing more for us to fetch from the table.
