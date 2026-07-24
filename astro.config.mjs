@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import rehypeFigures from './src/lib/rehype-figures.mjs';
+import remarkImageSizeHints from './src/lib/remark-image-size-hints.mjs';
 
 export default defineConfig({
   site: 'https://gene-t-taylor.com',
@@ -10,6 +11,7 @@ export default defineConfig({
   },
   integrations: [mdx()],
   markdown: {
+    remarkPlugins: [remarkImageSizeHints],
     rehypePlugins: [rehypeFigures],
   },
   // Note: trailing-slash directory redirects only — handled by Astro.
