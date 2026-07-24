@@ -115,6 +115,11 @@ the distribution config. Worth confirming in the console:
 - Redirect stubs are tiny static files with `canonical` + `noindex`; sitemap, RSS,
   and structured data all present and small.
 
+> **Update:** finding 1 has been fixed on this branch — post images moved to
+> `src/assets/` and optimized by Astro's image pipeline. Re-audit of the post
+> page: perf score 75 → **97**, LCP 19.0 s → **2.2 s**, page weight
+> 4,352 KiB → **295 KiB**. Findings 2–6 remain open.
+
 ## Suggested order of work
 
 1. Move post images into `src/` and let Astro's image service optimize them

@@ -16,11 +16,11 @@
 // treated as lead-in prose and kept as its own paragraph.
 //
 // Size hint: append #small / #medium / #wide to the image URL, e.g.
-//   ![alt](/images/foo.png#medium)
-// The fragment is stripped from the src and mapped to a modifier class
-// (post-figure--medium) so the figure can be constrained in CSS. Fragments are
-// ignored by the browser when loading images, so this is invisible if the CSS
-// is not present.
+//   ![alt](./foo.png#medium)
+// remark-image-size-hints strips the fragment (Astro's image pipeline can't
+// resolve URLs containing one) and carries the hint here as a data-size
+// attribute, which this plugin lifts off the <img> and maps to a modifier
+// class (post-figure--medium) so the figure can be constrained in CSS.
 
 const SIZE_HINTS = new Set(['small', 'medium', 'wide']);
 
@@ -101,13 +101,15 @@ function transformImageParagraph(p) {
 }
 
 function extractSizeClass(img) {
-  const src = img.properties && img.properties.src;
-  if (typeof src !== 'string') return null;
-  const hashIndex = src.indexOf('#');
-  if (hashIndex === -1) return null;
-  const hint = src.slice(hashIndex + 1).toLowerCase();
-  img.properties.src = src.slice(0, hashIndex);
-  return SIZE_HINTS.has(hint) ? `post-figure--${hint}` : null;
+  if (!img.properties) return null;
+  // hProperties set in remark keep their literal key; hast-native properties
+  // would camelize it. Accept either spelling.
+  const hint = img.properties['data-size'] ?? img.properties.dataSize;
+  delete img.properties['data-size'];
+  delete img.properties.dataSize;
+  return typeof hint === 'string' && SIZE_HINTS.has(hint)
+    ? `post-figure--${hint}`
+    : null;
 }
 
 function trimEdges(nodes) {
